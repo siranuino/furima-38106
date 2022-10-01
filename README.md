@@ -13,10 +13,10 @@
 
 ### Association
 
-- has_many :products
+- has_many :items
 - has_many :purchases
 
-## products テーブル
+## items テーブル
 
 | Column             | Type       | Options                        |
 | ------------------ | ---------- | ------------------------------ |
@@ -46,9 +46,9 @@
 | building_name | string     |                                |
 | phone_number  | string     | null: false, unique:true       |
 | user_id       | references | null: false, foreign_key: true |
-| product_id    | references | null: false, foreign_key: true |
+| item_id    | references | null: false, foreign_key: true |
 
 ### Association
 
-- belong_to :users
+- belong_to :items
 - has_many :products
