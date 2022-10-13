@@ -3,11 +3,12 @@ require 'rails_helper'
 RSpec.describe Item, type: :model do
   before do
     @item = FactoryBot.build(:item)
+    @item.image = fixture_file_upload('app/assets/images/test.jpeg')
   end
 
   describe '商品出品' do
     context '商品出品できる場合' do
-      it "title、explanation、category_id、condition_id、defrayment_id、area_id、deliverytime_id、priceが存在すれば登録できる" do
+      it "image、title、explanation、category_id、condition_id、defrayment_id、area_id、deliverytime_id、priceが存在すれば登録できる" do
         expect(@item).to be_valid
       end
     end
@@ -85,6 +86,11 @@ RSpec.describe Item, type: :model do
         expect(@item.errors.full_messages).to include("Price must be less than or equal to 9999999")
       end
 
+      it "priceが数字以外だと登録できない" do
+        @item.price = 'abc'
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Price is not a number")
+      end
     end
   end
 end
