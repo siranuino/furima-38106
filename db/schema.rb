@@ -45,11 +45,6 @@ ActiveRecord::Schema.define(version: 2022_10_12_151956) do
     t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.integer "genre_id"
-    t.integer "item_status_id"
-    t.integer "charge_id"
-    t.integer "prefecture_id"
-    t.integer "day_id"
     t.index ["user_id"], name: "index_items_on_user_id"
   end
 
