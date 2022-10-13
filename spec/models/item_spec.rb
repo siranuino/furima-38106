@@ -91,6 +91,12 @@ RSpec.describe Item, type: :model do
         @item.valid?
         expect(@item.errors.full_messages).to include("Price is not a number")
       end
+
+      it "priceが全角数字だと登録できない" do
+        @item.price = '１２３４５'
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Price is not a number")
+      end
     end
   end
 end
