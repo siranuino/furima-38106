@@ -17,13 +17,13 @@ RSpec.describe Item, type: :model do
       it "titleが空では登録できない" do
         @item.title = ''
         @item.valid?
-        expect(@item.errors.full_messages).to include("Title is too short (minimum is 1 character)")
+        expect(@item.errors.full_messages).to include("Title can't be blank")
       end
    
       it "explanationが空では登録できない" do
         @item.explanation = ''
         @item.valid?
-        expect(@item.errors.full_messages).to include("Explanation is too short (minimum is 1 character)")
+        expect(@item.errors.full_messages).to include("Explanation can't be blank")
       end
    
       it "category_idが未選択では登録できない" do
@@ -59,7 +59,7 @@ RSpec.describe Item, type: :model do
       it "priceが空では登録できない" do
         @item.price = ''
         @item.valid?
-        expect(@item.errors.full_messages).to include("Price is not a number")
+        expect(@item.errors.full_messages).to include("Price can't be blank")
       end
    
       it "titleが41文字だと登録できない" do
@@ -97,6 +97,19 @@ RSpec.describe Item, type: :model do
         @item.valid?
         expect(@item.errors.full_messages).to include("Price is not a number")
       end
+
+      it "商品画像が空では登録できない" do
+        @item.image = nil
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Image can't be blank")
+      end
+
+      it "userが紐付いていなければ出品できない" do
+        @item.user = nil
+        @item.valid?
+        expect(@item.errors.full_messages).to include("User must exist")
+      end
+
     end
   end
 end
