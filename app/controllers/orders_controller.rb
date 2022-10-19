@@ -1,13 +1,13 @@
 class OrdersController < ApplicationController
-  before_action :set_item, only: [:index]
+  before_action :set_item, only: [:index,:create]
 
 
   def index
-    @order_mailing_address = OrderMailingaddress.new
+    @order_mailing_address = OrderMailingAddress.new
   end
 
   def create
-    @order_mailing_address = OrderMailingaddress.new(order_params)
+    @order_mailing_address = OrderMailingAddress.new(order_params)
     if @order_mailing_address.valid?
       pay_item
       @order_mailing_address.save
