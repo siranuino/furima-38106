@@ -2,7 +2,9 @@ require 'rails_helper'
 
 RSpec.describe OrderMailingAddress, type: :model do
   before do
-    @order_mailing_address = FactoryBot.build(:order_mailing_address)
+    item = FactoryBot.create(:item)
+    user = FactoryBot.create(:user)
+    @order_mailing_address = FactoryBot.build(:order_mailing_address, item_id: item.id, user_id: user.id)
   end
 
   describe '商品購入' do
@@ -62,6 +64,18 @@ RSpec.describe OrderMailingAddress, type: :model do
 
       it 'phone_numberは9桁以下では購入できない' do
         @order_mailing_address.phone_number = '012345678'
+        @order_mailing_address.valid?
+        expect(@order_mailing_address.errors.full_messages).to include("Phone number is invalid")
+      end
+
+      it 'phone_numberはハイフンを含んだ形式では購入できない' do
+        @order_mailing_address.phone_number = '090-4444-44' #11桁
+        @order_mailing_address.valid?
+        expect(@order_mailing_address.errors.full_messages).to include("Phone number is invalid")
+      end
+
+      it 'phone_numberは全角を含んだ形式では購入できない' do
+        @order_mailing_address.phone_number = '０９０１２３４１２３４' #11桁
         @order_mailing_address.valid?
         expect(@order_mailing_address.errors.full_messages).to include("Phone number is invalid")
       end
