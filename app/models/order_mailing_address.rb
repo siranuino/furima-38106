@@ -7,8 +7,10 @@ class OrderMailingAddress
   validates :area_id,  presence: true, numericality: { other_than: 1 }
   validates :municipality, presence: true
   validates :address, presence: true
-  validates :phone_number, presence: true, format: { with: /\A\d{11}\z/, message: "Numbers longer than 11 digits cannot be saved"}
+  validates :phone_number, presence: true, format: {with: /\A\d{10,11}\z/}
   validates :token, presence: true
+  validates :user_id, presence: true
+  validates :item_id, presence: true
 
   def save
    # 購入者の情報の保存

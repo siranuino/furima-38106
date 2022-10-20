@@ -10,6 +10,11 @@ RSpec.describe OrderMailingAddress, type: :model do
       it "post_code、area_id、municipality、address、phone_number、tokenが存在すれば購入できる" do
         expect(@order_mailing_address).to be_valid
       end
+
+      it 'building_nameは空でも購入できる' do
+        @order_mailing_address.building_name = ''
+        expect(@order_mailing_address).to be_valid
+      end
     end
 
     context '商品購入できない場合' do
@@ -43,11 +48,6 @@ RSpec.describe OrderMailingAddress, type: :model do
         expect(@order_mailing_address.errors.full_messages).to include("Address can't be blank")
       end
 
-      it 'building_nameは空でも保存できること' do
-        @order_mailing_address.building_name = ''
-        expect(@order_mailing_address).to be_valid
-      end
-
       it 'phone_numberは空では購入できない' do
         @order_mailing_address.phone_number = ''
         @order_mailing_address.valid?
@@ -55,15 +55,33 @@ RSpec.describe OrderMailingAddress, type: :model do
       end
 
       it 'phone_numberは12桁以上では購入できない' do
-        @order_mailing_address.phone_number = '012345678912'
+        @order_mailing_address.phone_number = '012345678910'
         @order_mailing_address.valid?
-        expect(@order_mailing_address.errors.full_messages).to include("Phone number Numbers longer than 11 digits cannot be saved")
+        expect(@order_mailing_address.errors.full_messages).to include("Phone number is invalid")
+      end
+
+      it 'phone_numberは9桁以下では購入できない' do
+        @order_mailing_address.phone_number = '012345678'
+        @order_mailing_address.valid?
+        expect(@order_mailing_address.errors.full_messages).to include("Phone number is invalid")
       end
 
       it 'tokenが空では購入できない' do
         @order_mailing_address.token = nil
         @order_mailing_address.valid?
         expect(@order_mailing_address.errors.full_messages).to include("Token can't be blank")
+      end
+
+      it "userが紐付いていなければ出品できない" do
+        @order_mailing_address.user_id = nil
+        @order_mailing_address.valid?
+        expect(@order_mailing_address.errors.full_messages).to include("User can't be blank")
+      end
+
+      it "itemが紐付いていなければ出品できない" do
+        @order_mailing_address.item_id = nil
+        @order_mailing_address.valid?
+        expect(@order_mailing_address.errors.full_messages).to include("Item can't be blank")
       end
 
     end
