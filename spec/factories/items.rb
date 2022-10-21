@@ -1,5 +1,6 @@
 FactoryBot.define do
   factory :item do
+    image              {'test.jpeg'}
     title              {'商品名'}
     explanation        {'商品説明'}
     category_id        {Faker::Number.between(from: 2, to: 13)}
@@ -9,5 +10,9 @@ FactoryBot.define do
     deliverytime_id    {Faker::Number.between(from: 2, to: 4)}
     price              {Faker::Number.between(from: 300, to: 9999999)}
     user
+
+    after(:build) do |item|
+      item.image.attach(io: File.open('public/test.jpeg'), filename: 'test.jpeg')
+    end
   end
 end
