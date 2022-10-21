@@ -3,7 +3,7 @@ FactoryBot.define do
     image              {'test.jpeg'}
     title              {'商品名'}
     explanation        {'商品説明'}
-    category_id        {Faker::Number.between(from: 2, to: 13)}
+    category_id        {Faker::Number.between(from: 2, to: 11)}
     condition_id       {Faker::Number.between(from: 2, to: 7)}
     defrayment_id      {Faker::Number.between(from: 2, to: 3)}
     area_id            {Faker::Number.between(from: 2, to: 48)}
