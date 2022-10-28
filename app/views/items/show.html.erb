@@ -82,7 +82,7 @@
   <%# /商品の概要 %>
 
 
-  <div class="comments">
+  <div class="comments" id="comments">
     <h4>＜＜  商品へのコメント  ＞＞</h4>
     <% if @comments %>
        <% @comments.each do |comment| %>
@@ -94,9 +94,9 @@
      <% end %>
   </div>
 
-  <div class="comment-box">
+  <div id="comment-box">
     <% if current_user %>
-      <%= form_with(model: [@item, @comment], local: true) do |f| %>
+      <%= form_with model: [@item, @comment], id: "comment-form" do |f| %>
         <%= f.text_area :text, placeholder: "コメントを入力", class:"comment-text"%>
         <p class="comment-warn">
           相手のことを考え丁寧なコメントを心がけましょう。
