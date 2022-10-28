@@ -94,7 +94,7 @@
      <% end %>
   </div>
 
-  <div id="comment-box">
+  <div class="comment-box">
     <% if current_user %>
       <%= form_with model: [@item, @comment], id: "comment-form" do |f| %>
         <%= f.text_area :text, placeholder: "コメントを入力", class:"comment-text"%>
